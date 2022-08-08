@@ -1,0 +1,56 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card" *ngIf="isTable" style="margin:auto;width: 60%;height: auto;">
+                <form [formGroup]="loginf" (ngSubmit)="onsubmit()">
+                    <div class="form-group">
+                        <label>Spend Money</label>
+                        <input type="text" formControlName="moneys" class="form-control" required>
+                        <span class="text-danger" *ngIf="loginf.get('moneys').hasError('required') && (loginf.get('moneys').touched || loginf.get('moneys').valid)">pls enter the amount</span>
+                        <span class="text-danger" *ngIf="loginf.get('moneys').hasError('minlength') && (loginf.get('moneys').touched || loginf.get('moneys').invalid)">its has to minimum 2 digites</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Data of Spend</label>
+                        <input type="date" formControlName="enterydates" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Resason for Spent</label><br>
+                        <textarea cols="50" rows="5" formControlName="commen"></textarea>
+                    </div>
+                    <button type="submit" class="form-control btn-primary">submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="card"><div><button type="button" (click)="isTable=!isTable">Add Data</button></div>
+                <table class="table table-stripted">
+                    <tbody>
+                        <tr>
+                        <th>ID</th>
+                        <th>Money</th>
+                        <th>Date</th>
+                        <th>Resason</th>
+                        <th>Remarks</th>
+                        </tr>
+                        <tr *ngFor="let user of userData">
+                        <td>{{user.id}}</td>
+                        <td>{{user.moneys | currency:'INR'}}</td>
+                        <td>{{user.enterydates | date :'MM-dd-yy'}}</td>
+                        <td>{{user.commen}}</td>
+                        <td><button class="button btn-primary" >Edit</button>
+                            <button class="button btn-danger" (click)="deleteEntry(user.id)">Delete</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
